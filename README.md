@@ -61,6 +61,4 @@ _TODO: what worked, what failed, tool call frequency, hallucinations, safeguards
 
 ## Group contributions
 
-| Member | Contribution |
-|--------|--------------|
-| _Name_ | _..._ |
+

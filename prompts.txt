@@ -1,0 +1,52 @@
+#	Prompt	Covers	Expected behavior
+
+1	Find a paper about LLM agents for software engineering published after 2022 with at least 100 citations.	
+Narrow topic, after, min citations	Found. Year ≥ 2023, citations ≥ 100.
+
+2	Find a paper about retrieval-augmented generation published before 2021 with more than 500 citations.	
+Narrow topic, before, min citations	Found. Year ≤ 2020, citations > 500. The RAG paper by Lewis et al. (2020) is a likely hit.
+
+3	Find a paper about deep learning published in 2015 with at least 1000 citations.	
+Broad topic, exact year, min citations	Found. Year = 2015, citations ≥ 1000.
+
+4	Find a recent paper about AI agents using tools.	
+Broad topic, vague “recent”, no citation constraint	Found. Agent should treat “recent” as roughly the last 2 to 3 years and say how it interpreted it.
+
+5	Find a paper about transformers published before 2018 with at least 50000 citations.	
+Broad topic, before, high threshold	Likely not found, or only borderline. Tests rejection.
+
+6	Find a paper about LLM agents for software engineering published after 2025 with at least 5000 citations.	
+Narrow topic, after, unrealistic threshold	found=False. The explanation must say why.
+
+7	Find a paper about quantum error correction for knitting patterns published in 2019 with at least 200 citations.	
+Nonsense topic, no good paper exists	found=False. No invented paper.
+
+8	Find a highly cited paper about attention.	
+Ambiguous topic (attention in ML or psychology?), vague “highly cited”	Agent should pick an interpretation and state it, or flag the ambiguity. No hallucinated numbers.
+
+9	Find a paper about graph neural networks published in 2020 with fewer than 100 citations.	
+Narrow topic, exact year, max citations	Found if one exists. Year = 2020, citations < 100. Tests the max operator.
+
+10	Find a paper about vision transformers with around 3000 citations.	
+Narrow topic, approx citations, no year	Found. Citations within about ±20% of 3000 (2400 to 3600). Tests approx.
+
+11	Find a paper on prompt injection attacks in LLM applications published after 2022.	
+Narrow topic, after, no citation constraint	Found. Year ≥ 2023. Tests a missing citation constraint.
+
+12	Find me a good paper.	
+Extremely ambiguous, no topic. Should not invent a topic or paper. Either found=False with an explanation asking for a topic, or a clearly flagged guess.
+
+Coverage check against the assignment
+
+Broad topics: 3, 4, 5, 8
+Narrow topics: 1, 2, 6, 9, 10, 11
+Before / after / exact year: before (2, 5), after (1, 6, 11), exact (3, 9)
+Minimum citations: 1, 2, 3, 5, 6
+No good paper: 6, 7, plus probably 5
+Ambiguous: 8, 12, plus 4 (“recent”)
+
+
+Results: 
+Only had to up the tool calling twice it went from two calls to the search to three since it was needed then four
+Should still be observed with other prompts but all of them gave proper answers 
+
