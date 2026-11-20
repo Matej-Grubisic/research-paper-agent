@@ -1,0 +1,213 @@
+{
+  "run_started_at": "2026-11-20T11:18:53.096846+00:00",
+  "review_method": "Qualitative review by the coding assistant against the recorded tool titles and truncated abstracts; not an independent human or blind review. Unsupported claims fail grounding even if they may be true outside the supplied evidence.",
+  "summary": {
+    "cases": 12,
+    "completed": 9,
+    "execution_errors": 3,
+    "paper_answers": 8,
+    "passed": 6,
+    "attempted_search_calls": 15,
+    "completed_search_calls": 15,
+    "mean_search_calls_all_cases": 1.25,
+    "mean_search_calls_completed_cases": 1.3333333333333333,
+    "max_search_calls": 4,
+    "invented_title_rejections": 0,
+    "criteria": {
+      "relevant": {
+        "pass": 8,
+        "fail": 0,
+        "n/a": 1,
+        "error": 3
+      },
+      "year": {
+        "pass": 5,
+        "fail": 0,
+        "n/a": 4,
+        "error": 3
+      },
+      "citations": {
+        "pass": 6,
+        "fail": 0,
+        "n/a": 3,
+        "error": 3
+      },
+      "source": {
+        "pass": 8,
+        "fail": 0,
+        "n/a": 1,
+        "error": 3
+      },
+      "grounded": {
+        "pass": 7,
+        "fail": 2,
+        "n/a": 0,
+        "error": 3
+      },
+      "useful": {
+        "pass": 8,
+        "fail": 1,
+        "n/a": 0,
+        "error": 3
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": 1,
+      "scores": {
+        "relevant": "pass",
+        "grounded": "pass",
+        "useful": "pass",
+        "year": "pass",
+        "citations": "pass",
+        "source": "pass"
+      },
+      "overall": "pass",
+      "notes": "The title and abstract explicitly cover LLM software-engineering agents. The selected year and count satisfy the original request, although the tool arguments incorrectly used after 2023 rather than after 2022, narrowing retrieval unnecessarily."
+    },
+    {
+      "id": 2,
+      "scores": {
+        "relevant": "pass",
+        "grounded": "pass",
+        "useful": "pass",
+        "year": "pass",
+        "citations": "pass",
+        "source": "pass"
+      },
+      "overall": "pass",
+      "notes": "The RAG paper directly matches the topic. The selected count exceeds 500, but the tool requested inclusive min 500 rather than 501; this run therefore passes the final-answer check but exposes a boundary risk."
+    },
+    {
+      "id": 3,
+      "scores": {
+        "relevant": "pass",
+        "grounded": "fail",
+        "useful": "pass",
+        "year": "pass",
+        "citations": "pass",
+        "source": "pass"
+      },
+      "overall": "fail",
+      "notes": "Correct topic, year and citation count. The selected tool result has no abstract, so describing the paper as a seminal review is not supported by the title/abstract evidence supplied to the model. This is a grounding failure, not proof that the claim is false."
+    },
+    {
+      "id": 4,
+      "scores": {
+        "relevant": "pass",
+        "grounded": "pass",
+        "useful": "fail",
+        "year": "n/a",
+        "citations": "n/a",
+        "source": "pass"
+      },
+      "overall": "fail",
+      "notes": "A 2026 paper on tool-using AI agents is relevant and recent at the evaluation date. The answer does not explain how 'recent' was interpreted; the hidden tool arguments used after 2022. No numeric year/citation threshold was specified, so those checks are N/A."
+    },
+    {
+      "id": 5,
+      "scores": {
+        "relevant": "pass",
+        "grounded": "pass",
+        "useful": "pass",
+        "year": "pass",
+        "citations": "pass",
+        "source": "pass"
+      },
+      "overall": "pass",
+      "notes": "The returned abstract explicitly introduces the Transformer. The 2017 paper with 151778 citations meets both numeric constraints; the original prompt notes were wrong to expect likely rejection."
+    },
+    {
+      "id": 6,
+      "scores": {
+        "relevant": "n/a",
+        "grounded": "pass",
+        "useful": "pass",
+        "year": "n/a",
+        "citations": "n/a",
+        "source": "n/a"
+      },
+      "overall": "pass",
+      "notes": "All four searches returned the same general LLM survey. The agent rejected its weak topical evidence and reported no matching paper found rather than claiming that none exists. Selected-paper criteria are N/A; this is a justified retrieval-limited rejection, not an exhaustive proof."
+    },
+    {
+      "id": 7,
+      "scores": {
+        "relevant": "error",
+        "year": "error",
+        "citations": "error",
+        "source": "error",
+        "grounded": "error",
+        "useful": "error"
+      },
+      "overall": "fail",
+      "notes": "The model attempted an unavailable JSON tool and exhausted tool retries. Two searches completed; the second dropped the citation constraint. No final answer was produced, so none of the six output criteria is credited."
+    },
+    {
+      "id": 8,
+      "scores": {
+        "relevant": "pass",
+        "grounded": "fail",
+        "useful": "pass",
+        "year": "n/a",
+        "citations": "n/a",
+        "source": "pass"
+      },
+      "overall": "fail",
+      "notes": "The prompt permits attention in psychology; the answer identifies visual attention and gives an externally supported high citation count. However, the chosen result has no abstract. 'Introduced', 'seminal', and 'foundational' go beyond its title and supplied metadata."
+    },
+    {
+      "id": 9,
+      "scores": {
+        "relevant": "pass",
+        "grounded": "pass",
+        "useful": "pass",
+        "year": "pass",
+        "citations": "pass",
+        "source": "pass"
+      },
+      "overall": "pass",
+      "notes": "The title establishes the GNN topic and heterogeneous-graph focus. The tool correctly translated fewer than 100 into max 99, and the selected 2020 paper has 79 citations."
+    },
+    {
+      "id": 10,
+      "scores": {
+        "relevant": "pass",
+        "grounded": "pass",
+        "useful": "pass",
+        "year": "n/a",
+        "citations": "pass",
+        "source": "pass"
+      },
+      "overall": "pass",
+      "notes": "The title supports the training-from-scratch/ImageNet description. Its 3164 citations fall within the specified inclusive 2400-3600 approximation interval."
+    },
+    {
+      "id": 11,
+      "scores": {
+        "relevant": "error",
+        "year": "error",
+        "citations": "error",
+        "source": "error",
+        "grounded": "error",
+        "useful": "error"
+      },
+      "overall": "fail",
+      "notes": "A search returned candidates, but the model attempted an unavailable JSON tool and exhausted retries. No final answer was produced."
+    },
+    {
+      "id": 12,
+      "scores": {
+        "relevant": "error",
+        "year": "error",
+        "citations": "error",
+        "source": "error",
+        "grounded": "error",
+        "useful": "error"
+      },
+      "overall": "fail",
+      "notes": "The missing-topic case produced no final clarification: the model attempted an unavailable JSON tool and exhausted retries, without searching."
+    }
+  ]
+}

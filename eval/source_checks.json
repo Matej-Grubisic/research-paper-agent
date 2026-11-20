@@ -1,0 +1,114 @@
+[
+  {
+    "case_id": 1,
+    "checked_at": "2026-11-20T12:03:30.910068+00:00",
+    "source_url": "https://openalex.org/W4411449940",
+    "http_status": 200,
+    "record": {
+      "id": "https://openalex.org/W4411449940",
+      "doi": "https://doi.org/10.1145/3715754",
+      "title": "Demystifying LLM-Based Software Engineering Agents",
+      "publication_year": 2025,
+      "cited_by_count": 1058
+    },
+    "matches_answer": true
+  },
+  {
+    "case_id": 2,
+    "checked_at": "2026-11-20T12:03:31.170510+00:00",
+    "source_url": "https://openalex.org/W3027879771",
+    "http_status": 200,
+    "record": {
+      "id": "https://openalex.org/W3027879771",
+      "doi": "https://doi.org/10.48550/arxiv.2005.11401",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "publication_year": 2020,
+      "cited_by_count": 10331
+    },
+    "matches_answer": true
+  },
+  {
+    "case_id": 3,
+    "checked_at": "2026-11-20T12:03:31.433243+00:00",
+    "source_url": "https://openalex.org/W2919115771",
+    "http_status": 200,
+    "record": {
+      "id": "https://openalex.org/W2919115771",
+      "doi": "https://doi.org/10.1038/nature14539",
+      "title": "Deep learning",
+      "publication_year": 2015,
+      "cited_by_count": 109111
+    },
+    "matches_answer": true
+  },
+  {
+    "case_id": 4,
+    "checked_at": "2026-11-20T12:03:31.700783+00:00",
+    "source_url": "https://openalex.org/W7140420070",
+    "http_status": 200,
+    "record": {
+      "id": "https://openalex.org/W7140420070",
+      "doi": "https://doi.org/10.48550/arxiv.2603.23802",
+      "title": "How are AI agents used? Evidence from 177,000 MCP tools",
+      "publication_year": 2026,
+      "cited_by_count": 21
+    },
+    "matches_answer": true
+  },
+  {
+    "case_id": 5,
+    "checked_at": "2026-11-20T12:03:32.027201+00:00",
+    "source_url": "https://openalex.org/W2626778328",
+    "http_status": 200,
+    "record": {
+      "id": "https://openalex.org/W2626778328",
+      "doi": "https://doi.org/10.48550/arxiv.1706.03762",
+      "title": "Attention Is All You Need",
+      "publication_year": 2017,
+      "cited_by_count": 151778
+    },
+    "matches_answer": true
+  },
+  {
+    "case_id": 8,
+    "checked_at": "2026-11-20T12:03:32.189106+00:00",
+    "source_url": "https://openalex.org/W2149095485",
+    "http_status": 200,
+    "record": {
+      "id": "https://openalex.org/W2149095485",
+      "doi": "https://doi.org/10.1016/0010-0285(80)90005-5",
+      "title": "A feature-integration theory of attention",
+      "publication_year": 1980,
+      "cited_by_count": 14102
+    },
+    "matches_answer": true
+  },
+  {
+    "case_id": 9,
+    "checked_at": "2026-11-20T12:03:32.444610+00:00",
+    "source_url": "https://openalex.org/W3104121894",
+    "http_status": 200,
+    "record": {
+      "id": "https://openalex.org/W3104121894",
+      "doi": "https://doi.org/10.48550/arxiv.2011.09679",
+      "title": "Scalable Graph Neural Networks for Heterogeneous Graphs",
+      "publication_year": 2020,
+      "cited_by_count": 79
+    },
+    "matches_answer": true
+  },
+  {
+    "case_id": 10,
+    "checked_at": "2026-11-20T12:03:32.701813+00:00",
+    "source_url": "https://openalex.org/W3121523901",
+    "http_status": 200,
+    "record": {
+      "id": "https://openalex.org/W3121523901",
+      "doi": "https://doi.org/10.1109/iccv48922.2021.00060",
+      "title": "Tokens-to-Token ViT: Training Vision Transformers from Scratch on ImageNet",
+      "publication_year": 2021,
+      "cited_by_count": 3164
+    },
+    "matches_answer": true
+  }
+]
