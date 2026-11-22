@@ -2,6 +2,7 @@
 
 import os
 import time
+import logging
 
 import httpx
 
@@ -10,6 +11,7 @@ from .models import Paper, SearchConstraints
 OPENALEX_URL = "https://api.openalex.org/works"
 APPROX_TOLERANCE = 0.2  # "approx N" citations means within +/-20% of N
 FETCH_SIZE = 50
+logger = logging.getLogger(__name__)
 
 
 def _rebuild_abstract(inverted_index: dict | None) -> str | None:
@@ -25,11 +27,21 @@ def _rebuild_abstract(inverted_index: dict | None) -> str | None:
 
 def get_with_retry(url, params=None, max_tries=5):
     for attempt in range(max_tries):
-        resp = httpx.get(url, params=params, timeout=30)
+        logger.info("OpenAlex: sending request %s/%s (30s request timeout).", attempt + 1, max_tries)
+        started = time.monotonic()
+        try:
+            resp = httpx.get(url, params=params, timeout=30)
+        except httpx.RequestError as error:
+            logger.error("OpenAlex: request failed (%s).", type(error).__name__)
+            raise
+        logger.info("OpenAlex: HTTP %s after %.1fs.", resp.status_code, time.monotonic() - started)
         if resp.status_code != 429:
             resp.raise_for_status()
             return resp
+        if attempt == max_tries - 1:
+            break
         wait = float(resp.headers.get("Retry-After", 2**attempt))
+        logger.warning("OpenAlex: rate limited; waiting %.1fs before retry.", wait)
         time.sleep(wait)
     raise RuntimeError("OpenAlex still rate-limiting after retries")
 

@@ -25,6 +25,11 @@ cp .env.example .env             # Windows: copy .env.example .env
 python -m src.main "Find a paper about LLM agents for software engineering published after 2022 with at least 100 citations"
 ```
 
+The CLI prints progress for Groq requests, OpenAlex searches, and rate-limit
+waits. Requests have a 30-second network timeout; each agent attempt has a
+120-second run timeout. Groq transport retries are disabled so errors surface
+promptly. Invalid JSON can still trigger up to three agent attempts.
+
 ## Project structure
 
 ```

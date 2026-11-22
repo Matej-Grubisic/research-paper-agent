@@ -3,11 +3,16 @@
 import os
 import json
 import re
+import logging
+import time
 
+import httpx
 from dotenv import load_dotenv
 from pydantic_ai import Agent
 from pydantic import ValidationError
 from pydantic_ai.settings import ModelSettings
+from pydantic_ai.models.groq import GroqModel
+from pydantic_ai.providers.groq import GroqProvider
 
 from .models import PaperAnswer, SearchConstraints
 from .tools import filter_papers, search_openalex
@@ -15,6 +20,22 @@ from .tools import filter_papers, search_openalex
 load_dotenv()
 
 MODEL = "groq:openai/gpt-oss-120b"
+logger = logging.getLogger(__name__)
+
+
+async def log_model_request(request: httpx.Request) -> None:
+    request.extensions["started_at"] = time.monotonic()
+    logger.info("Groq: sending request; waiting for response (30s request timeout).")
+
+
+async def log_model_response(response: httpx.Response) -> None:
+    elapsed = time.monotonic() - response.request.extensions["started_at"]
+    logger.info("Groq: HTTP %s after %.1fs.", response.status_code, elapsed)
+
+
+model_client = httpx.AsyncClient(
+    event_hooks={"request": [log_model_request], "response": [log_model_response]},
+)
 
 SYSTEM_PROMPT = f"""You are a research scout. Find ONE paper matching the user's request.
 Rules:
@@ -32,11 +53,14 @@ Schema: {json.dumps(PaperAnswer.model_json_schema())}
 """
 
 agent = Agent(
-    MODEL,
+    GroqModel(
+        MODEL.removeprefix("groq:"),
+        provider=GroqProvider(http_client=model_client),
+    ),
     output_type=str,
     system_prompt=SYSTEM_PROMPT,
     retries=3,
-    model_settings=ModelSettings(max_tokens=1500),
+    model_settings=ModelSettings(max_tokens=1500, timeout=30, max_retries=0),
 )
 
 #table formatting 
@@ -66,8 +90,10 @@ def run_agent(prompt: str, attempts: int = 3) -> PaperAnswer:
     SEARCH_LOG.clear()
     text = prompt
     last_error = ""
-    for _ in range(attempts):
-        result = agent.run_sync(text)
+    for attempt in range(attempts):
+        logger.info("Agent: starting attempt %s/%s (120s run timeout).", attempt + 1, attempts)
+        result = agent.run_sync(text, timeout=120)
+        logger.info("Agent: response received; validating JSON.")
         raw = result.output
         match = re.search(r"\{.*\}", raw, re.DOTALL)
         try:
@@ -76,6 +102,7 @@ def run_agent(prompt: str, attempts: int = 3) -> PaperAnswer:
             return PaperAnswer.model_validate_json(match.group(0))
         except (ValidationError, ValueError) as e:
             last_error = str(e)
+            logger.warning("Agent: invalid JSON output on attempt %s/%s.", attempt + 1, attempts)
             text = (f"{prompt}\n\nYour previous reply was not valid JSON for the "
                     f"schema ({last_error[:200]}). Reply again with only the JSON object.")
     return PaperAnswer(found=False, explanation=f"Agent failed to produce valid output: {last_error[:200]}")    
@@ -146,4 +173,8 @@ def search_papers(
     matches = filter_papers(candidates, constraints)
     result = [p.model_dump() for p in matches[:5]]
     SEARCH_LOG.append(result)
+    logger.info(
+        "Search: %s candidates, %s matches; returning %s papers to Groq.",
+        len(candidates), len(matches), len(result),
+    )
     return result

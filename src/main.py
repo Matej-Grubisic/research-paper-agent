@@ -1,11 +1,15 @@
 """CLI entry point: python -m src.main "your request" """
 
 import sys
+import logging
 
 from .agent import SEARCH_LOG, print_table, run_agent, verify_answer
 
 
 def main() -> None:
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s", datefmt="%H:%M:%S")
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    logging.getLogger("httpx2").setLevel(logging.WARNING)
     prompt = " ".join(sys.argv[1:]) or input("Research request: ")
     out, hallucinated = verify_answer(run_agent(prompt))
 
