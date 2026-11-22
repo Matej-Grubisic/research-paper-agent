@@ -49,7 +49,9 @@ eval/
 
 ## LLM choice
 
-_TODO: which provider/model, current free-tier limits, why it was chosen._
+We used **GPT-OSS 120B through Groq** (`groq:openai/gpt-oss-120b`, not xAI's Grok)
+because it supports tool calling, works with PydanticAI, and can interpret search
+constraints and judge paper relevance.
 
 ## Evaluation
 
@@ -137,4 +139,3 @@ misread constraints. With more time, we would fix the output protocol, verify
 the original constraints independently, enforce search limits in code, and
 handle missing abstracts and vague requests more carefully. We would also repeat
 the evaluation and get a human review of the qualitative scores.
-
