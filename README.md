@@ -144,3 +144,10 @@ misread constraints. With more time, we would fix the output protocol, verify
 the original constraints independently, enforce search limits in code, and
 handle missing abstracts and vague requests more carefully. We would also repeat
 the evaluation and get a human review of the qualitative scores.
+
+## Group member contributions
+
+We worked on the project together in person, sharing a laptop to brainstorm ideas
+and implement them using Matej's account. This is why most commits are under
+Matej's name. Later, we continued working together using Tymon's account to add
+evaluations, code improvements, and a visual representation of the model's work.
